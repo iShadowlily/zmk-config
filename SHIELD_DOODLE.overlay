@@ -1,0 +1,41 @@
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+    };
+
+    kscan0: kscan_0 {
+        compatible = "zmk,kscan-gpio-matrix";
+        label = "KSCAN";
+        diode-direction = "col2row";
+
+        col-gpios
+            = <&nice_nano_v2 D21 GPIO_ACTIVE_HIGH>
+            , <&nice_nano_v2 D7 GPIO_ACTIVE_HIGH>
+            , <&nice_nano_v2 D6 GPIO_ACTIVE_HIGH>
+            ;
+
+        row-gpios
+            = <&nice_nano_v2 D4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&nice_nano_v2 D5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
+    };
+};
+
+#include <dt-bindings/zmk/matrix_transform.h>
+
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,matrix_transform = &default_transform;
+    };
+
+    default_transform: keymap_transform_0 {
+        compatible = "zmk,matrix-transform";
+        columns = <3>;
+        rows = <2>;
+// | MX1  | MX2  | MX3  |
+// |   MX4   | MX5 | MX6 |
+
+RC(1,0) RC(2,0) RC(3,0)
+RC(4,0) RC(5,0) RC(6,0)
+    };
